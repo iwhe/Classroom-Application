@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles/dash.css";
 
+const APP_API_URL = process.env.REACT_APP_API_URL || "http://localhost:7000";
+
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [classrooms, setClassrooms] = useState([]);
@@ -20,18 +22,21 @@ const Dashboard = () => {
           return;
         }
 
-        const userResponse = await axios.get("/api/auth/me", {
+        const userResponse = await axios.get(`${APP_API_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(userResponse.data);
 
         if (userResponse.data.role === "principal") {
-          const classroomResponse = await axios.get("/api/classroom", {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          const classroomResponse = await axios.get(
+            `${APP_API_URL}/api/classroom`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
           setClassrooms(classroomResponse.data);
 
-          const userResponse = await axios.get("/api/user", {
+          const userResponse = await axios.get(`${APP_API_URL}/api/user`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setStudents(userResponse.data.filter((u) => u.role === "student"));
@@ -40,7 +45,7 @@ const Dashboard = () => {
           const classroomId = userResponse.data.classroom;
           if (classroomId) {
             const classroomResponse = await axios.get(
-              `/api/classroom/${classroomId}`,
+              `${APP_API_URL}/api/classroom/${classroomId}`,
               {
                 headers: { Authorization: `Bearer ${token}` },
               }
@@ -48,7 +53,7 @@ const Dashboard = () => {
             setClassrooms([classroomResponse.data]);
 
             const studentResponse = await axios.get(
-              `/api/user/classroom/${classroomId}`,
+              `${APP_API_URL}/api/user/classroom/${classroomId}`,
               {
                 headers: { Authorization: `Bearer ${token}` },
               }
