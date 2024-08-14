@@ -1,0 +1,36 @@
+.timetable{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top:20px;
+    padding: 20px;
+}
+.timetable-form, .timetable-class{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: center; */
+    width: 80%;
+    gap: 10px;
+    background-color: rgba(49, 52, 54, 0.608);
+    padding: 30px;
+    border-radius: 20px;
+    border: none;
+}
+.lecture{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1 rem;
+}
+ input,  .timetable-form button{
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(244, 244, 244, 1);
+}
+.timetable-form button{
+    background-color: rgb(6, 157, 6);
+}

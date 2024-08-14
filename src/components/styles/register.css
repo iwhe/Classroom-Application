@@ -17,8 +17,12 @@
     border-radius: 10px;
     border: none;
 }
+.title{
+    font-family: monospace;
+}
 .registerForm select{
-    background-color: rgba(187, 245, 79, 0.723);
+    background-color:  rgb(204, 204, 204);
+    /* rgba(187, 245, 79, 0.723); */
 }
 .registerForm button{
     width: 100%;

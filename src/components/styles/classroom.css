@@ -1,0 +1,40 @@
+.create-classroom{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top:20px;
+    padding: 20px;
+}
+.create-classForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: center; */
+    gap: 10px;
+    background-color: rgba(49, 52, 54, 0.608);
+    padding: 30px;
+    border-radius: 20px;
+    border: none;
+}
+.classroom-name, .class-teacher{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px
+
+}
+
+.classroom-name input, .class-teacher select, .create-classForm button{
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(244, 244, 244, 1);
+}
+.create-classForm button{
+    background-color: rgb(6, 157, 6);
+}
+.class-students ul{
+    list-style: none;
+
+}

@@ -15,7 +15,6 @@ const userRoutes = require("./routes/userRoutes.js");
 
 const app = express();
 dotenv.config();
-
 // require("dotenv").config({ path: "../env" });
 
 const PORT = process.env.PORT;
@@ -34,16 +33,6 @@ connectDB()
   .catch((err) => {
     console.error("Mongo db connection failed!", err);
   });
-// mongoose
-//   .connect("mongodb://localhost:27017/classroom", {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     console.log("MongoDB connected");
-//     seedPrincipal();
-//   })
-//   .catch((err) => console.log(err));
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -63,9 +52,6 @@ async function seedPrincipal() {
   let principal = await User.findOne({ email: principalEmail });
 
   if (!principal) {
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPassword = await bcrypt.hash(principalPassword, salt);
-
     principal = new User({
       name: "Principal",
       email: principalEmail,

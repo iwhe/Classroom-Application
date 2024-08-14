@@ -1,94 +1,80 @@
-// // routes/classroomRoutes.js
-// const express = require("express");
-// const Classroom = require("../models/classroom.models.js");
-// const User = require("../models/user.models.js");
-// const router = express.Router();
-
-// // Create a classroom
-// router.post("/create", async (req, res) => {
-//   const { name } = req.body;
-
-//   const classroom = new Classroom({ name });
-//   await classroom.save();
-//   res.status(201).json(classroom);
-// });
-
-// // Assign a teacher to a classroom
-// router.post("/assign-teacher", async (req, res) => {
-//   const { classroomId, teacherId } = req.body;
-
-//   const classroom = await Classroom.findById(classroomId);
-//   if (!classroom)
-//     return res.status(404).json({ message: "Classroom not found" });
-
-//   classroom.teacher = teacherId;
-//   await classroom.save();
-//   res.json(classroom);
-// });
-
-// // Assign students to a classroom
-// router.post("/assign-students", async (req, res) => {
-//   const { classroomId, studentIds } = req.body;
-
-//   const classroom = await Classroom.findById(classroomId);
-//   if (!classroom)
-//     return res.status(404).json({ message: "Classroom not found" });
-
-//   classroom.students.push(...studentIds);
-//   await classroom.save();
-
-//   // Also update the student's classroom field (if needed)
-//   await User.updateMany(
-//     { _id: { $in: studentIds } },
-//     { classroom: classroomId }
-//   );
-
-//   res.json(classroom);
-// });
-
-// // Get all classrooms
-// router.get("/", async (req, res) => {
-//   const classrooms = await Classroom.find()
-//     .populate("teacher", "name")
-//     .populate("students", "name");
-//   res.json(classrooms);
-// });
-
-// module.exports = router;
-// routes/classroomRoutes.js
 const express = require("express");
 const Classroom = require("../models/classroom.models.js");
 const User = require("../models/user.models.js");
 const router = express.Router();
 
-// Create Classroom
-router.post("/create", async (req, res) => {
-  const { name, teacherId } = req.body;
+// Get all users (Principal only)
+router.get("/", async (req, res) => {
+  try {
+    // Fetch all classrooms and populate the teacher and students fields
+    const classrooms = await Classroom.find()
+      .populate("teacher", "name email") // Populate teacher's details
+      .populate("students", "name email"); // Populate students' details
 
-  // Ensure the teacher is not assigned to another classroom
-  const existingTeacher = await User.findOne({
-    _id: teacherId,
-    classroom: { $ne: null },
-  });
-  if (existingTeacher) {
-    return res
-      .status(400)
-      .json({ message: "Teacher is already assigned to another classroom" });
+    res.json(classrooms);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching classrooms", error });
   }
-
-  const classroom = new Classroom({ name, teacher: teacherId });
-  await classroom.save();
-
-  // Assign the teacher to the classroom
-  await User.findByIdAndUpdate(teacherId, { classroom: classroom._id });
-
-  res.status(201).json({ message: "Classroom created and teacher assigned" });
 });
 
-// Get Classrooms
-router.get("/", async (req, res) => {
-  const classrooms = await Classroom.find().populate("teacher", "name email");
-  res.json(classrooms);
+/// Create Classroom
+router.post("/create", async (req, res) => {
+  const { className, assignedTeacher, selectedStudents } = req.body;
+
+  try {
+    // Create the new classroom
+    const newClassroom = new Classroom({
+      name: className,
+      teacher: assignedTeacher,
+      students: selectedStudents,
+    });
+
+    await newClassroom.save();
+
+    // Assign the classroom to the teacher
+    await User.findByIdAndUpdate(assignedTeacher, {
+      classroom: newClassroom._id,
+    });
+
+    // Assign the classroom to the students
+    await User.updateMany(
+      { _id: { $in: selectedStudents }, role: "student" },
+      { classroom: newClassroom._id }
+    );
+
+    res.status(201).json({ message: "Classroom created successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error creating classroom", error });
+  }
+});
+
+// Delete Classroom
+router.delete("/:id", async (req, res) => {
+  try {
+    const classroomId = req.params.id;
+
+    // Find and remove the classroom
+    const classroom = await Classroom.findByIdAndDelete(classroomId);
+
+    if (!classroom) {
+      return res.status(404).json({ message: "Classroom not found" });
+    }
+
+    // Remove classroom reference from the teacher
+    await User.findByIdAndUpdate(classroom.teacher, {
+      $unset: { classroom: "" },
+    });
+
+    // Remove classroom reference from students
+    await User.updateMany(
+      { _id: { $in: classroom.students } },
+      { $unset: { classroom: "" } }
+    );
+
+    res.status(200).json({ message: "Classroom deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting classroom" });
+  }
 });
 
 module.exports = router;

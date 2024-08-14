@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles/dash.css";
 
-const APP_API_URL = process.env.REACT_APP_API_URL || "http://localhost:7000";
+const APP_API_URL = "http://localhost:7000" || process.env.REACT_APP_API_URL;
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -73,6 +73,22 @@ const Dashboard = () => {
     fetchData();
   }, [navigate]);
 
+  //Handle Delete Users
+  //   const handleDelete = async (userId) => {
+  //     try {
+  //       const token = localStorage.getItem("token"); // Assuming you need token for authorization
+  //       await axios.delete(`/api/users/${userId}`, {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       });
+  //       // Refresh data after deletion
+  //       setTeachers(teachers.filter((teacher) => teacher._id !== userId));
+  //       setStudents(students.filter((student) => student._id !== userId));
+  //       window.alert("User deleted successfully! ");
+  //     } catch (error) {
+  //       console.error("Error deleting user", error);
+  //     }
+  //   };
+
   // Handle loading state
   if (loading) {
     return <div>Loading...</div>;
@@ -94,52 +110,71 @@ const Dashboard = () => {
       </div>
       {user.role === "principal" && (
         <>
-          <h3>Teachers</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teachers.map((teacher) => (
-                <tr className="tableEntry" key={teacher._id}>
-                  <td>{teacher.name}</td>
-                  <td>{teacher.email}</td>
-                  <td>{/* Add Edit/Delete Actions */}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="classroomButtons">
+            <button
+              className="seeClassroom"
+              onClick={() => navigate("/classroom")}
+            >
+              See all Classrooms
+            </button>
 
-          <h3>Students</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student) => (
-                <tr key={student._id}>
-                  <td>{student.name}</td>
-                  <td>{student.email}</td>
-                  <td>{/* Add Edit/Delete Actions */}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            <button
+              className="createClassroom"
+              onClick={() => navigate("/create-classroom")}
+            >
+              Create Classroom
+            </button>
+          </div>
+          <div className="userList">
+            <div>
+              <h3>Teachers</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {teachers.map((teacher) => (
+                    <tr className="tableEntry" key={teacher._id}>
+                      <td>{teacher.name}</td>
+                      <td>{teacher.email}</td>
+                      {/* <td>
+                        <button onClick={() => handleDelete(teacher._id)}>
+                          Delete
+                        </button>
+                      </td> */}
+                      <td>{/* Add Edit/Delete Actions */}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-          <button
-            className="createClassroom"
-            onClick={() => navigate("/create-classroom")}
-          >
-            Create Classroom
-          </button>
+            <div>
+              <h3>Students</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {students.map((student) => (
+                    <tr key={student._id}>
+                      <td>{student.name}</td>
+                      <td>{student.email}</td>
+                      <td>{/* Add Edit/Delete Actions */}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </>
       )}
 
@@ -148,8 +183,9 @@ const Dashboard = () => {
           <p style={{ color: "red" }}>
             You have not been assigned to a classroom yet.
           </p>
+
           <button
-            className="createClassroom"
+            className="createTimetable"
             onClick={() => navigate("/create-timetable")}
           >
             Create Timetable

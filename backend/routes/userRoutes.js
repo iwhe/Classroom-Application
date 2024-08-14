@@ -9,7 +9,29 @@ router.get("/", async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Cannot retrieve Users! Server error" });
+  }
+});
+
+// Get all students
+router.get("/students", async (req, res) => {
+  try {
+    const students = await User.find({ role: "student" });
+    res.json(students);
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    res.status(500).json({ message: "Cannot retrieve Students! Server error" });
+  }
+});
+
+// Get all teachers
+router.get("/teachers", async (req, res) => {
+  try {
+    const teachers = await User.find({ role: "teacher" });
+    res.json(teachers);
+  } catch (error) {
+    console.error("Error fetching teacher:", error);
+    res.status(500).json({ message: "Cannot retrieve Teachers! Server error" });
   }
 });
 
@@ -42,12 +64,32 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete user (Principal only)
-router.delete("/:id", async (req, res) => {
+// router.delete("/:id", async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     await User.findByIdAndDelete(id);
+//     res.json({ message: "User deleted" });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
+// Delete User
+router.delete("/:userId", async (req, res) => {
+  const { userId } = req.params;
+
   try {
-    const { id } = req.params;
-    await User.findByIdAndDelete(id);
-    res.json({ message: "User deleted" });
+    // Check if the user exists
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Delete the user
+    await User.findByIdAndDelete(userId);
+
+    res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
+    console.error("Error deleting user", error);
     res.status(500).json({ message: "Server error" });
   }
 });

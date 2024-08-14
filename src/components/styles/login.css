@@ -9,7 +9,9 @@
     border-radius: 20px;
     padding: 20px;
     /* width: 80%; */
-    background-color: #32322c;
+    background-color:#32322c;
+     /* rgba(244, 244, 244, 1); */
+     
 }
 .loginForm input,.loginForm button{
     padding: 20px;

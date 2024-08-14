@@ -35,8 +35,12 @@ const Register = () => {
   return (
     <div className="register">
       <div className="register-section">
-        <h2>Register</h2>
+        <div className="title">
+          <h2>Welcome to Classroom Application for all! </h2>
+          <h3>You can manage all your classroom related task here.</h3>
+        </div>
         <form className="registerForm" onSubmit={handleSubmit}>
+          <h3>Register yourself</h3>
           <input
             type="text"
             value={name}
