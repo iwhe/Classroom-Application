@@ -1,4 +1,4 @@
-.register, .registerForm{
+.register, .register-section, .registerForm{
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
@@ -11,16 +11,20 @@
     /* width: 80%; */
     background-color: #32322c;
 }
-.registerForm input,.registerForm button, .registerForm select{
+.registerForm input, .login-section button ,.registerForm button, .registerForm select{
     padding: 20px;
     /* width: 80%; */
     border-radius: 10px;
     border: none;
 }
 .registerForm select{
-    background-color: rgb(126, 174, 246);
+    background-color: rgba(187, 245, 79, 0.723);
 }
 .registerForm button{
     width: 100%;
     background-color: rgb(22, 115, 255);
+}
+.login-section button {
+    width: 100%;
+    background-color: rgb(126, 174, 246);
 }

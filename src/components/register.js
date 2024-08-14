@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles/register.css";
 
-const APP_API_URL = process.env.REACT_APP_API_URL || "http://localhost:7000";
+const APP_API_URL = "http://localhost:7000" || process.env.REACT_APP_API_URL;
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -28,37 +28,47 @@ const Register = () => {
     }
   };
 
+  const handleLogin = async (e) => {
+    navigate("/login");
+  };
+
   return (
     <div className="register">
-      <h2>Register</h2>
-      <form className="registerForm" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
-          required
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
-        </select>
-        <button type="submit">Register</button>
-      </form>
+      <div className="register-section">
+        <h2>Register</h2>
+        <form className="registerForm" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+            required
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            required
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+          <button type="submit">Register</button>
+        </form>
+      </div>
+      <div className="login-section">
+        <p>Already an user?</p>
+        <button onClick={handleLogin}>Login</button>
+      </div>
     </div>
   );
 };
