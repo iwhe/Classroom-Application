@@ -1,0 +1,93 @@
+.create-classroom{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin-top:20px; */
+    padding: 20px;
+}
+.create-classForm{
+    width: 500px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* align-items: center; */
+    gap: 10px;
+    background-color: rgba(49, 52, 54, 0.608);
+    padding: 30px;
+    border-radius: 20px;
+    border: none;
+    text-align: justify;
+}
+
+@media (max-width: 720px) {
+    .create-classForm{
+    width: 100%;
+    box-sizing: border-box;
+    }
+    textarea{
+       max-width: 80%;
+    }
+
+}
+.create-classForm div{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: baseline;
+    width: 100%;
+}
+.classroom-name,.classroom-description, .class-teacher{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px
+}
+
+input, textarea, select{
+    box-sizing:border-box;
+    position: relative;
+    width: 100%;
+}
+
+.classroom-description textarea{
+    min-height: 150px;
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    resize: none;
+    background-color: rgba(244, 244, 244, 1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    min-width: 100%;
+}
+
+.classroom-name input, .class-teacher select, .create-classForm button{
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(244, 244, 244, 1);
+}
+.create-classForm button{
+    background-color: rgb(6, 157, 6);
+}
+
+.class-students{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+
+}
+
+.class-students ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+.class-students ul li {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: right;
+}

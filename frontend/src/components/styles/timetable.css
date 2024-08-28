@@ -1,0 +1,29 @@
+.timetable{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top:20px;
+    padding: 20px;
+}
+.timetable-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 400px;
+    gap: 10px;
+    background-color: rgba(48, 87, 3, 0.608);
+    padding: 30px;
+    border-radius: 20px;
+    border: none;
+}
+
+ input,  .timetable-form button{
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(244, 244, 244, 1);
+}
+.timetable-form button{
+    background-color: rgb(6, 157, 6);
+}

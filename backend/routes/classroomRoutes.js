@@ -1,53 +1,30 @@
 const express = require("express");
 const Classroom = require("../models/classroom.models.js");
 const User = require("../models/user.models.js");
+const {
+  viewAllClassroom,
+  createClassroom,
+  getAllStudentsInClassroom,
+  classroomById,
+  updateClassroom,
+  viewClassroomProfile,
+} = require("../controllers/classroom.controller.js");
 const router = express.Router();
+const { adminCheck } = require("../middleware/admin.middleware.js");
+const authMiddleware = require("../middleware/authMiddleware.js");
 
 // Get all users (Principal only)
-router.get("/", async (req, res) => {
-  try {
-    // Fetch all classrooms and populate the teacher and students fields
-    const classrooms = await Classroom.find()
-      .populate("teacher", "name email") // Populate teacher's details
-      .populate("students", "name email"); // Populate students' details
+router.route("/").get(authMiddleware, adminCheck, viewAllClassroom);
+router.route("/create").post(authMiddleware, adminCheck, createClassroom);
 
-    res.json(classrooms);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching classrooms", error });
-  }
-});
+router
+  .route("/allStudentInClass")
+  .get(authMiddleware, getAllStudentsInClassroom);
 
-/// Create Classroom
-router.post("/create", async (req, res) => {
-  const { className, assignedTeacher, selectedStudents } = req.body;
+router.route("/:id").get(classroomById);
+router.route("/update/:id").put(updateClassroom);
 
-  try {
-    // Create the new classroom
-    const newClassroom = new Classroom({
-      name: className,
-      teacher: assignedTeacher,
-      students: selectedStudents,
-    });
-
-    await newClassroom.save();
-
-    // Assign the classroom to the teacher
-    await User.findByIdAndUpdate(assignedTeacher, {
-      classroom: newClassroom._id,
-    });
-
-    // Assign the classroom to the students
-    await User.updateMany(
-      { _id: { $in: selectedStudents }, role: "student" },
-      { classroom: newClassroom._id }
-    );
-
-    res.status(201).json({ message: "Classroom created successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Error creating classroom", error });
-  }
-});
-
+router.route("/viewClassroomProfile/:id").get(viewClassroomProfile);
 // Delete Classroom
 router.delete("/:id", async (req, res) => {
   try {
