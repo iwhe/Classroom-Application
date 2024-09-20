@@ -22,6 +22,7 @@ const Login = () => {
         password,
       });
       console.log(`User logged in!`);
+      setLoading(false);
       navigate("/dashboard");
     } catch (err) {
       switch (err.response?.status) {
@@ -40,9 +41,7 @@ const Login = () => {
         default:
           setError("An unknown error occurred.");
       }
-    }finally{
-      setLoading(false);
-}
+    }
   };
 
 if(loading){
