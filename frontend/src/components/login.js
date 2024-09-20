@@ -10,11 +10,13 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       await handleLogin({
         email,
         password,
@@ -38,8 +40,15 @@ const Login = () => {
         default:
           setError("An unknown error occurred.");
       }
-    }
+    }finally{
+      setLoading(false);
+}
   };
+
+if(loading){
+ return <div>Please wait for some time.. Fetching API for the first time might take some time 
+</div>
+}
 
   return (
     <div className="login-container justify-around items-center min-h-screen md:flex">
