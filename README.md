@@ -1,35 +1,41 @@
 # Features
 
-## User Roles: 
+### User Roles: 
 <ol>
-<li>Teacher,</li>
-<li>Students,</li>
-<li>Principal</li>
+<li>Principal,</li>
+<li>Student,</li>
+<li>Teacher</li>
 </ol>
+
 ### 1. Students can 
---see their profile details, 
---see their assigned classroom,  
-see their classroom timetable,
-see their classmates (!them),
-List of teacher in their School,
---Principal name and his email,
-logOut
+<ul>
+<li>see their profile details, </li>
+<li>see their assigned classroom,  </li>
+<li>see their classroom timetable,</li>
+<li>see their classmates (!them),</li>
+<li>List of teachers in their School,</li>
+<li>Principal name and his email,</li>
+<li>Logout</li>
+</ul>
 
 ### 2. Teachers can 
---see their profile details,
---see their assigned classroom,
---can see list of students which they are assigned to,
-can see their classroom timetable,
-also create new timetable for same classroom, (only)
-can see list of teachers in their school,
---can see principal name and his email,
---logOut
+<ul>
+<li>see their profile details,</li>
+<li>see their assigned classroom,</li>
+<li>can see list of students which they are assigned to,</li>
+<li>can see their classroom timetable,</li>
+<li>also create new timetable for same classroom, (only)</li>
+<li>can see list of teachers in their school,</li>
+<li>can see principal name and his email,</li>
+<li>Logout</li>
+</ul>
 
-### 3. Pricipal can
-see all students in school and edit details
-see all teachers in school and edit details
-can see all classrooms in school,
-list of teachers and students in each classrooms
-create time table for classrooms,
-create new classroom, 
-
+### 3. Principal can
+<ul>
+<li>see all students in school and edit details</li>
+<li>see all teachers in school and edit details</li>
+<li>can see all classrooms in school,</li>
+<li>list of teachers and students in each classrooms</li>
+<li>create time table for classrooms,</li>
+<li>create new classroom, </li>
+</ul>
