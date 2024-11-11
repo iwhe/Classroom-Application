@@ -1,8 +1,8 @@
-#Design user dashboard and write proper backend for each action
+# Features
 
-1. User: Teacher, Students, Principal
+## User Roles: Teacher, Students, Principal
 
-1. Students can 
+### 1. Students can 
 --see their profile details, 
 --see their assigned classroom,  
 see their classroom timetable,
@@ -11,7 +11,7 @@ List of teacher in their School,
 --Principal name and his email,
 logOut
 
-2. Teachers can 
+### 2. Teachers can 
 --see their profile details,
 --see their assigned classroom,
 --can see list of students which they are assigned to,
@@ -21,7 +21,7 @@ can see list of teachers in their school,
 --can see principal name and his email,
 --logOut
 
-3. Pricipal can
+### 3. Pricipal can
 see all students in school and edit details
 see all teachers in school and edit details
 can see all classrooms in school,
