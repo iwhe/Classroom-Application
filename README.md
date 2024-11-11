@@ -1,7 +1,11 @@
 # Features
 
-## User Roles: Teacher, Students, Principal
-
+## User Roles: 
+<ol>
+<li>Teacher,</li>
+<li>Students,</li>
+<li>Principal</li>
+</ol>
 ### 1. Students can 
 --see their profile details, 
 --see their assigned classroom,  
